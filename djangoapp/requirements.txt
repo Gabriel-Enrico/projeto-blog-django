@@ -1,0 +1,4 @@
+django
+psycopg2-binary
+pillow
+django-summernote>=0.8.20.0,<0.8.21

@@ -1,0 +1,58 @@
+<footer class="footer section-wrapper mt-base">
+  <div class="section-content-wide">
+    <div class="section-gap">
+      <div class="footer-columns">
+        <div>
+          <h3 style="font-family: var(--ff-display); font-style: italic; color: hsl(var(--clr-white)); margin-top: 0; font-size: var(--fs-h4);">Blog do Gabriel</h3>
+          <p style="color: hsl(var(--clr-gray-base)); font-size: var(--fs-sm); line-height: 1.6;">
+            Escrita sobre tecnologia, design e desenvolvimento. Ideias que valem a leitura.
+          </p>
+        </div>
+        <div>
+          <h6 style="color: hsl(var(--clr-gray-lt)); letter-spacing: var(--ls-widest); text-transform: uppercase; margin-top: 0; font-size: var(--fs-smlr);">Navegação</h6>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Artigos</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-copy center">
+        © {% now "Y" %} {{ site_setup.title }} — Todos os direitos reservados.</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    if (typeof CodeMirror === "undefined") return;
+
+    const codes = document.querySelectorAll("pre");
+
+    for (const code of codes) {
+      const language = code.dataset.language || null;
+
+      const text = code.textContent || code.innerText;
+      const config = {
+        value: text,
+        tabsize: 2,
+        mode: language,
+        theme: 'dracula',
+        lineNumbers: true,
+        styleActiveLine: true,
+        styleActiveSelected: true,
+        lineWrapping: false,
+        line: true,
+        readOnly: true,
+        viewportMargin: 50,
+        matchBrackets: true,
+      };
+
+      const editor = CodeMirror(function (node) {
+        code.parentNode.replaceChild(node, code);
+      }, config);
+    }
+  })();
+</script>

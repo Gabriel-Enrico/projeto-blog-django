@@ -1,0 +1,64 @@
+<!-- Hero / Masthead (não sticky) -->
+<div class="blog-hero">
+  <div class="section-content-narrow">
+    <h1 class="blog-title">
+      <a class="blog-link" href="/"> {{ site_setup.title }} </a>
+    </h1>
+
+    {% if site_setup.show_description %}
+      <p class="blog-description">
+        {{ site_setup.description }}
+      </p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Header sticky com menu e busca -->
+<header class="header section-wrapper">
+  <div class="section-content-wide">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding-block: var(--spacing-micro);">
+
+      {% if site_setup.show_menu %}
+        <nav class="menu" style="flex:1;">
+          <ul class="menu-items" style="justify-content:flex-start;">
+            {% for link in site_setup.menu.all %}
+              <li class="menu-item">
+                {% if link.new_tab %}
+                  <a target="_blank" class="menu-link" href="{{ link.url_or_path }}">
+                    {{ link.text }}
+                  </a>
+                {% else %}
+                  <a class="menu-link" href="{{ link.url_or_path }}">
+                    {{ link.text }}
+                  </a>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+
+      {% if site_setup.show_search %}
+        <div class="search" style="flex:0 0 auto; width:28rem; margin:0;">
+          <form class="search-form" action="{% url "blog:search" %}" method="get">
+            <div class="search-content">
+              <label class="sr-only" id="search-label" for="search-input">Buscar</label>
+              <input
+                class="search-input"
+                type="search"
+                name="search"
+                id="search-input"
+                placeholder="Buscar artigos…"
+                value="{{ search_value }}"
+              >
+              <button class="search-btn" type="submit" aria-labelledby="search-label">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</header>
