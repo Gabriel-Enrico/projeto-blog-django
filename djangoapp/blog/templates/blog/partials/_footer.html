@@ -1,25 +1,43 @@
 <footer class="footer section-wrapper mt-base">
   <div class="section-content-wide">
-    <div class="section-gap">
+    <div class="footer-inner section-gap">
       <div class="footer-columns">
-        <div>
-          <h3 style="font-family: var(--ff-display); font-style: italic; color: hsl(var(--clr-white)); margin-top: 0; font-size: var(--fs-h4);">Blog do Gabriel</h3>
-          <p style="color: hsl(var(--clr-gray-base)); font-size: var(--fs-sm); line-height: 1.6;">
-            Escrita sobre tecnologia, design e desenvolvimento. Ideias que valem a leitura.
+        <div class="footer-brand">
+          <a class="footer-logo" href="{% url 'blog:index' %}">
+            <span class="footer-logo-mark" aria-hidden="true"></span>
+            <span>{{ site_setup.title }}</span>
+          </a>
+          <p>
+            {{ site_setup.description }}
           </p>
         </div>
-        <div>
-          <h6 style="color: hsl(var(--clr-gray-lt)); letter-spacing: var(--ls-widest); text-transform: uppercase; margin-top: 0; font-size: var(--fs-smlr);">Navegação</h6>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">
-            <li><a href="#">Início</a></li>
-            <li><a href="#">Artigos</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Contato</a></li>
-          </ul>
-        </div>
+
+        {% if site_setup.show_menu %}
+          <nav class="footer-nav" aria-label="Navegação do rodapé">
+            <h2>Navegação</h2>
+            <ul>
+              <li><a href="{% url 'blog:index' %}">Início</a></li>
+              {% for link in site_setup.menu.all %}
+                <li>
+                  {% if link.new_tab %}
+                    <a target="_blank" rel="noreferrer" href="{{ link.url_or_path }}">
+                      {{ link.text }}
+                    </a>
+                  {% else %}
+                    <a href="{{ link.url_or_path }}">
+                      {{ link.text }}
+                    </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </nav>
+        {% endif %}
       </div>
-      <div class="footer-copy center">
-        © {% now "Y" %} {{ site_setup.title }} — Todos os direitos reservados.</a>
+
+      <div class="footer-copy">
+        <span>© {% now "Y" %} {{ site_setup.title }}</span>
+        <span>Todos os direitos reservados.</span>
       </div>
     </div>
   </div>

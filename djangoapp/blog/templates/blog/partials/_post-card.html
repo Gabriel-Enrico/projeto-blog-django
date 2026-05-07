@@ -13,6 +13,20 @@
   {% endif %}
 
   <div class="card-text-wrapper">
+    <div class="card-meta">
+      {% if post.category %}
+        <a class="card-category" href="{% url "blog:category" post.category.slug %}">
+          {{ post.category.name }}
+        </a>
+      {% else %}
+        <span class="card-category">Artigo</span>
+      {% endif %}
+
+      <time datetime="{{ post.created_at|date:'c' }}">
+        {{ post.created_at|date:'d M Y' }}
+      </time>
+    </div>
+
     <div class="card-title-wrapper">
       <h2 class="card-title">
         <a href="{{ post.get_absolute_url }}" class="card-title-link">
@@ -28,8 +42,8 @@
 
       <div class="card-actions">
         <a class="card-action-link" href="{{ post.get_absolute_url }}">
-          <span>Read</span>
-          <i class="fa-solid fa-circle-arrow-right"></i>
+          <span>Ler artigo</span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </a>
       </div>
     </div>

@@ -1,8 +1,12 @@
-<!-- Hero / Masthead (não sticky) -->
 <div class="blog-hero">
-  <div class="section-content-narrow">
+  <div class="section-content-wide">
+    <a class="brand-chip" href="{% url 'blog:index' %}" aria-label="{{ site_setup.title }}">
+      <span class="brand-chip-mark" aria-hidden="true"></span>
+      <span>{{ site_setup.title }}</span>
+    </a>
+
     <h1 class="blog-title">
-      <a class="blog-link" href="/"> {{ site_setup.title }} </a>
+      <a class="blog-link" href="{% url 'blog:index' %}">{{ site_setup.title }}</a>
     </h1>
 
     {% if site_setup.show_description %}
@@ -13,18 +17,21 @@
   </div>
 </div>
 
-<!-- Header sticky com menu e busca -->
 <header class="header section-wrapper">
   <div class="section-content-wide">
-    <div style="display:flex; align-items:center; justify-content:space-between; padding-block: var(--spacing-micro);">
+    <div class="header-inner">
+      <a class="header-brand" href="{% url 'blog:index' %}">
+        <span class="header-brand-mark" aria-hidden="true"></span>
+        <span>{{ site_setup.title }}</span>
+      </a>
 
       {% if site_setup.show_menu %}
-        <nav class="menu" style="flex:1;">
-          <ul class="menu-items" style="justify-content:flex-start;">
+        <nav class="menu" aria-label="Menu principal">
+          <ul class="menu-items">
             {% for link in site_setup.menu.all %}
               <li class="menu-item">
                 {% if link.new_tab %}
-                  <a target="_blank" class="menu-link" href="{{ link.url_or_path }}">
+                  <a target="_blank" rel="noreferrer" class="menu-link" href="{{ link.url_or_path }}">
                     {{ link.text }}
                   </a>
                 {% else %}
@@ -39,7 +46,7 @@
       {% endif %}
 
       {% if site_setup.show_search %}
-        <div class="search" style="flex:0 0 auto; width:28rem; margin:0;">
+        <div class="search">
           <form class="search-form" action="{% url "blog:search" %}" method="get">
             <div class="search-content">
               <label class="sr-only" id="search-label" for="search-input">Buscar</label>
@@ -52,7 +59,7 @@
                 value="{{ search_value }}"
                 required
               >
-              <button class="search-btn" type="submit" aria-labelledby="search-label">
+              <button class="search-btn" type="submit" aria-label="Buscar">
                 <i class="fa fa-search"></i>
               </button>
             </div>

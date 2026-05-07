@@ -8,7 +8,7 @@
                 {% if posts %}
                 <div class="card-grid">
                     {% for post in posts %}
-                        {% include "blog/partials/_post-card.html" with i=foorloop %}
+                        {% include "blog/partials/_post-card.html" with i=forloop %}
                     {% endfor %}
                 </div>
                 {% else %}

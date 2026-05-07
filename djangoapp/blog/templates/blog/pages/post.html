@@ -15,42 +15,45 @@
 
 {% block content %}
 <main class="main-content single-post section-wrapper">
-  <div class="single-post-content section-content-narrow">
-    <div class="single-post-gap section-gap">
+  <article class="post-detail section-content-narrow">
+    <header class="post-hero-content section-gap">
+      <div class="post-kicker">
+        <a href="{% url 'blog:index' %}">Artigos</a>
+        {% if post.category %}
+          <span aria-hidden="true">/</span>
+          <a href="{% url "blog:category" post.category.slug %}">
+            {{ post.category.name }}
+          </a>
+        {% endif %}
+      </div>
 
-      {% if post.cover and post.cover_in_post_content %}
-        <div class="single-post-cover pb-base">
-          <img 
-            loading="lazy" 
-            src="{{ post.cover.url}}" 
-            alt="{{ post.title }}">
-        </div>
-      {% endif %}
-
-      <h2 class="single-post-title pb-base center">
+      <h1 class="single-post-title">
         {{ post.title }}
-      </h2>
+      </h1>
 
       <div class="post-meta pb-base">
-        <div class="post-meta-item">
-          <a 
-            class="post-meta-link" 
-            href="{% url "blog:created_by" post.created_by.pk %}"
-          >
-            <i class="fa-solid fa-user"></i>
-            <span>
-              {% if post.created_by.first_name %}
-                {{ post.created_by.first_name }}
-                {{ post.created_by.last_name }}
-              {% else %}
-                {{ post.created_by.username}}
-              {% endif %}
-            </span>
-          </a>
-        </div>
+        {% if post.created_by %}
+          <div class="post-meta-item">
+            <a
+              class="post-meta-link"
+              href="{% url "blog:created_by" post.created_by.pk %}"
+            >
+              <i class="fa-solid fa-user" aria-hidden="true"></i>
+              <span>
+                {% if post.created_by.first_name %}
+                  {{ post.created_by.first_name }}
+                  {{ post.created_by.last_name }}
+                {% else %}
+                  {{ post.created_by.username}}
+                {% endif %}
+              </span>
+            </a>
+          </div>
+        {% endif %}
+
         <div class="post-meta-item">
           <span class="post-meta-link">
-            <i class="fa-solid fa-calendar-days"></i>
+            <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
             <span>
               {{ post.created_at | date:'d/m/Y \à\s H:i' }}
             </span>
@@ -62,7 +65,7 @@
             <a 
               class="post-meta-link" 
               href="{% url "blog:category" post.category.slug %}">
-              <i class="fa-solid fa-tag"></i>
+              <i class="fa-solid fa-tag" aria-hidden="true"></i>
               <span>
                 {{ post.category.name}}
               </span>
@@ -74,29 +77,34 @@
       <p class="single-post-excerpt pb-base">
         {{ post.excerpt | safe }}
       </p>
+    </header>
 
-      <div class="separator"></div>
+    {% if post.cover and post.cover_in_post_content %}
+      <figure class="single-post-cover">
+        <img
+          loading="lazy"
+          src="{{ post.cover.url}}"
+          alt="{{ post.title }}">
+      </figure>
+    {% endif %}
 
-      <div class="single-post-content">
-        {{ post.content | safe }}
-      
-        {% if post.tags.exists %}
-          <div class="post-tags">
-            <span>Tags: </span>
+    <div class="rich-content section-gap">
+      {{ post.content | safe }}
 
-            {% for tag in post.tags.all %}
-              <a class="post-tag-link" href="{% url "blog:tag" tag.slug %}">
-                <i class="fa-solid fa-link"></i>
-                <span>{{ tag.name }}</span>
-              </a>
-            {% endfor %}
-          </div>
-        {% endif %}
-        
-      </div>
-    
+      {% if post.tags.exists %}
+        <div class="post-tags">
+          <span>Tags</span>
+
+          {% for tag in post.tags.all %}
+            <a class="post-tag-link" href="{% url "blog:tag" tag.slug %}">
+              <i class="fa-solid fa-link" aria-hidden="true"></i>
+              <span>{{ tag.name }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
-  </div>
+  </article>
 </main>
 
 {% endblock content %}
